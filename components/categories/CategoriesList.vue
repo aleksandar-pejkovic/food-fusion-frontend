@@ -13,22 +13,10 @@
 </template>
   
 <script setup>
-const categories = ref([
-    {
-        id: 1,
-        name: 'Sendviči',
-        imageUrl: 'cat-1.jpg',
-    },
-    {
-        id: 2,
-        name: 'Pice',
-        imageUrl: 'cat-2.jpg',
-    },
-    {
-        id: 3,
-        name: 'Dezerti',
-        imageUrl: 'cat-3.jpg',
-    },
-])
+const useUrl = useBaseUrl()
+const { data: categories } = await useFetch('/api/categories', {
+    transform: (_categories) => _categories.data
+})
+console.log(toRaw(categories.value))
 </script>
   
