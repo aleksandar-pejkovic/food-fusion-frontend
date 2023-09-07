@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto mt-8">
         <h1 class="text-2xl font-semibold text-center mb-4">Kategorije</h1>
-        <div class="flex flex-wrap gap-4">
+        <div class="flex flex-wrap justify-center gap-4">
             <div v-for="(category, index) in categories" :key="index" class="bg-white p-4 rounded shadow">
                 <NuxtLink :to="`/category/${category.id}`">
                     <nuxt-img :src="category.imageUrl" :alt="category.name" class="mb-2" />
