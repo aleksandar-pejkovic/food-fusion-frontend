@@ -4,7 +4,8 @@
         <div class="flex flex-wrap justify-center gap-4">
             <div v-for="(category, index) in categories" :key="index" class="bg-white p-4 rounded shadow">
                 <NuxtLink :to="`/category/${category.id}`">
-                    <nuxt-img :src="category.imageUrl" :alt="category.name" class="mb-2" />
+                    <nuxt-img :src="`data:image/jpeg;base64,${category.image}`" :alt="category.name"
+                        class="mb-2 max-h-96" />
                     <h2 class="text-lg text-center font-medium">{{ category.name }}</h2>
                 </NuxtLink>
             </div>
@@ -13,10 +14,6 @@
 </template>
   
 <script setup>
-const useUrl = useBaseUrl()
-const { data: categories } = await useFetch('/api/categories', {
-    transform: (_categories) => _categories.data
-})
-console.log(toRaw(categories.value))
+const baseUrl = useBaseUrl().value
+const { data: categories } = await useFetch(`${baseUrl}/categories/business-name/Alpey`)
 </script>
-  
