@@ -4,8 +4,9 @@
         <div class="flex flex-wrap justify-center gap-4">
             <div v-for="food in foods" :key="food.id" class="bg-white p-4 rounded shadow">
                 <NuxtLink :to="`/food/${food.id}`">
-                    <nuxt-img :src="food.imageUrl" :alt="food.name" class="mb-2" />
+                    <nuxt-img :src="`data:image/jpeg;base64,${food.image}`" :alt="food.name" class="mb-2 max-h-96" />
                     <h2 class="text-lg text-center font-medium">{{ food.name }}</h2>
+                    <h2 class="text-lg text-center font-medium">{{ food.price }}</h2>
                 </NuxtLink>
             </div>
         </div>
@@ -13,14 +14,10 @@
 </template>
   
 <script setup>
-
 const route = useRoute();
 const categoryId = route.params.id;
 
-const foods = ref([
-    { id: 1, name: 'Food 1', imageUrl: 'cat-1.jpg' },
-    { id: 2, name: 'Food 2', imageUrl: 'cat-2.jpg' },
-    { id: 3, name: 'Food 3', imageUrl: 'cat-3.jpg' },
-])
+const baseUrl = useBaseUrl().value
+const { data: foods } = await useFetch(`${baseUrl}/foods/categoryId/${categoryId}`)
 </script>
   
