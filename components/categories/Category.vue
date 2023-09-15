@@ -6,7 +6,7 @@
                 <NuxtLink :to="`/food/${food.id}`">
                     <nuxt-img :src="`data:image/jpeg;base64,${food.image}`" :alt="food.name" class="mb-2 max-h-96" />
                     <h2 class="text-lg text-center font-medium">{{ food.name }}</h2>
-                    <h2 class="text-lg text-center font-medium">{{ food.price }}</h2>
+                    <h2 class="text-lg text-center font-medium">Cena: {{ food.price }}</h2>
                 </NuxtLink>
             </div>
         </div>
