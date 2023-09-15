@@ -9,5 +9,5 @@ const route = useRoute();
 const foodId = route.params.id;
 
 const baseUrl = useBaseUrl().value
-const { data: food } = await useFetch(`${baseUrl}/foods/${foodId}`)
+const { data: food } = await useFetch(`${baseUrl}/foods/${foodId}`, { method: 'GET' })
 </script>
