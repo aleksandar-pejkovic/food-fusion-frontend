@@ -18,6 +18,12 @@ export default defineNuxtConfig({
     dir: 'assets/img'
   },
   modules: ['@pinia/nuxt', '@nuxt/image'],
+  pinia: {
+    autoImports: [
+      'defineStore',
+      ['defineStore', 'definePiniaStore'],
+    ],
+  },
   postcss: {
     plugins: {
       tailwindcss: {},
