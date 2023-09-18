@@ -54,7 +54,7 @@ function decrementQuantity() {
 }
 
 function incrementQuantity() {
-    if (quantity.value < 10) {
+    if (quantity.value < 100) {
         quantity.value++
     }
 }
