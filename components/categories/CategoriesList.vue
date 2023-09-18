@@ -14,6 +14,10 @@
 </template>
   
 <script setup>
+import { useBusinessStore } from '@/stores/business';
+
+const businessStore = useBusinessStore()
+const business = businessStore.getBusiness()
 const baseUrl = useBaseUrl().value
-const { data: categories } = await useFetch(`${baseUrl}/categories/business-name/Alpey`)
+const { data: categories } = await useFetch(`${baseUrl}/categories/business-id/${business.id}`)
 </script>
