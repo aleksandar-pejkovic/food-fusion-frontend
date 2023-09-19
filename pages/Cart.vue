@@ -11,27 +11,32 @@
                     <div>
                         <button @click="decreaseQuantity(item)"
                             class="text-red-500 w-5 rounded font-bold hover:bg-gray-100">-</button>
-                        {{ item.quantity }} kom.
+                        {{ item.quantity }}
                         <button @click="increaseQuantity(item)"
                             class="text-green-500 w-5 rounded font-bold hover:bg-gray-100">+</button>
                     </div>
-                    <div class="font-semibold">
-                        {{ item.total.toFixed(2) }}
-                    </div>
-                    <button @click="removeFromCart(item)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+                </div>
+                <div class="flex justify-between">
+                    <button @click="removeFromCart(item)"
+                        class="bg-red-500 text-white m-2 py-1 rounded w-20 hover:bg-red-600">
                         Ukloni
                     </button>
+                    <div class="font-semibold m-2 text-xl">
+                        {{ item.total.toFixed(2) }} din.
+                    </div>
                 </div>
+
             </li>
         </ul>
-        <p class="text-xl font-semibold mt-4">
+        <p class="text-2xl font-semibold mt-4">
             Ukupno: {{ totalAmount }} din.
         </p>
-        <button @click="placeOrder" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600">
+        <button v-if="items.length > 0" @click="placeOrder"
+            class="bg-blue-500 text-white py-2 rounded mt-4 w-20 hover:bg-blue-600">
             Poruči
         </button>
 
-        <p class="mt-4" v-if="orderMessage">{{ orderMessage }}</p>
+        <p class="mt-4 text-green-500 rounded font-bold" v-if="orderMessage">{{ orderMessage }}</p>
     </div>
 </template>
   
@@ -89,7 +94,7 @@ async function placeOrder() {
 
             if (itemsResponse.data) {
                 console.log('Order placed successfully');
-                orderMessage.value = `Porudžbina #${order.value.orderNumber} je kreirana. Status: ${order.value.status}`
+                orderMessage.value = `Broj porudžbine: #${order.value.orderNumber}. Status: ${order.value.status}`
                 clearCart()
             } else {
                 console.error('Failed to create items');
