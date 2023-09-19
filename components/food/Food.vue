@@ -6,14 +6,8 @@
                 <nuxt-img :src="`data:image/jpeg;base64,${food.image}`" :alt="food.name" class="mb-2 max-h-96" />
                 <h2 class="text-lg text-center font-medium m-5">{{ food.price.toFixed(2) }} din.</h2>
                 <div class="flex flex-row justify-center">
-                    <button @click="decrementQuantity" class="bg-gray-400 text-white px-2 py-2 rounded hover:bg-gray-600">
-                        -
-                    </button>
-                    <input type="number" id="quantity" name="quantity" v-model="quantity" min="1" max="10"
+                    <input type="number" id="quantity" name="quantity" v-model="quantity" min="1" max="100"
                         class="text-center m-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <button @click="incrementQuantity" class="bg-gray-400 text-white px-2 py-2 rounded-r hover:bg-gray-600">
-                        +
-                    </button>
                     <button @click="addToCart" class="ml-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                         Dodaj
                     </button>
@@ -46,18 +40,6 @@ const props = defineProps({
 
 const condimentIdList = ref([]);
 const quantity = ref(1);
-
-function decrementQuantity() {
-    if (quantity.value > 1) {
-        quantity.value--
-    }
-}
-
-function incrementQuantity() {
-    if (quantity.value < 100) {
-        quantity.value++
-    }
-}
 
 function addToCart() {
     const item = {

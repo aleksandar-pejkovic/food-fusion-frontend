@@ -27,18 +27,24 @@
         <p class="text-xl font-semibold mt-4">
             Ukupno: {{ totalAmount }} din.
         </p>
-        <button @click="clearCart" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600">
+        <button @click="placeOrder" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600">
             Poruči
         </button>
+
+        <p class="mt-4" v-if="orderMessage">{{ orderMessage }}</p>
     </div>
 </template>
   
   
 <script setup>
-import { useCartStore } from '@/stores/cart';
+import { useCartStore } from '@/stores/cart'
+import { useBusinessStore } from '@/stores/business'
 import { storeToRefs } from 'pinia'
 
 const cartStore = useCartStore()
+const businessStore = useBusinessStore()
+
+const orderMessage = ref('')
 
 const { items } = storeToRefs(cartStore)
 
@@ -60,6 +66,40 @@ function removeFromCart(item) {
 
 function clearCart() {
     cartStore.clearCart()
+}
+
+async function placeOrder() {
+    try {
+        const business = businessStore.getBusiness();
+        const baseUrl = useBaseUrl().value;
+
+        const orderResponse = await useFetch(`${baseUrl}/orders`, {
+            method: 'POST',
+            params: { businessId: business.id }
+        });
+
+        if (orderResponse.data) {
+            const order = orderResponse.data;
+            items.value.forEach((item) => (item.orderId = order.value.id));
+
+            const itemsResponse = await useFetch(`${baseUrl}/items`, {
+                method: 'POST',
+                body: JSON.stringify(items.value),
+            });
+
+            if (itemsResponse.data) {
+                console.log('Order placed successfully');
+                orderMessage.value = `Porudžbina #${order.value.orderNumber} je kreirana. Status: ${order.value.status}`
+                clearCart()
+            } else {
+                console.error('Failed to create items');
+            }
+        } else {
+            console.error('Failed to create order');
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+    }
 }
 
 const totalAmount = computed(() => {
